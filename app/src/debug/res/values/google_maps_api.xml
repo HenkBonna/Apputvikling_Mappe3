@@ -21,8 +21,10 @@
     string in this file.
     -->
 
-    <!-- Henriks kode:
-    AIzaSyAGE_MYPL8vQhBwp3nOK6wjvjzN4JHJrmc
+    <!-- Henriks kode: TODO: Delete this ffs
+    Henrik's SHA1: 37:EA:F4:F4:F6:9C:BF:71:BC:5E:FF:E3:1C:43:1C:DB:21:77:18:AA
+
+    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
     -->
 
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAaPT9tMV9E8RBUSLBCNNRr0-T9dd1nG1s</string>
