@@ -43,4 +43,4 @@ print(json_encode($output));
 ?>
 
 <!-- test URL -->
-http://studdata.cs.oslomet.no/~dbuser28/hentallehus
+http://studdata.cs.oslomet.no/~dbuser28/hentallehus.php
