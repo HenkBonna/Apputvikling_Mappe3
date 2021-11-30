@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,7 +33,7 @@ import java.net.URL;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    public static GoogleMap mMap;
     private ActivityMapsBinding binding;
 
     @Override
@@ -174,7 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         @Override
-        public String doInBackground(LatLng... latLngs){
+        public String doInBackground(LatLng... latLongs){
             String s = "";
             String output = "";
             String query = "https://maps.googleapis.com/maps/api/geocode/json?latlng="
@@ -206,20 +207,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .getJSONObject(0)
                         .getString("formatted_address");
 
+                boolean valid = false;
+                if (address.matches("[A-ZÆØÅa-zæøå\\s\\.\\']{4,30} [0-9]{1,5}[A-ZÆØÅa-zæøå]?, [0-9]{4} [A-ZÆØÅa-zæøå]{2,20}, [A-ZÆØÅa-zæøå]{2,20}")){
+                    valid = true;
+                }
+                if (valid){
+                    Intent intent = new Intent(getApplicationContext(), AddHouseActivity.class);
+                    intent.putExtra("address", address);
+                    intent.putExtra("lat", lat);
+                    intent.putExtra("lng", lng);
+                    startActivity(intent);
+                }
                 return address;
 
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
-        }
-        protected void onPostExecute(String result){
-            boolean valid = false;
-            if (result.matches("[A-ZÆØÅa-zæøå\\s\\.\\']{4,30} [0-9]{1,5}, [0-9]{4} [A-ZÆØÅa-zæøå]{2,20}, [A-ZÆØÅa-zæøå]{2,20}")){
-                valid = true;
-            }
-            System.out.println(result);
-            System.out.println(valid);
         }
     }
 }

@@ -4,9 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/GitHub/Apputvikling_Mappe3/app/src/main/res/layout/activity_maps.xml" value="0.2421875" />
+        <entry key="..\:/GitHub/Apputvikling_Mappe3/app/src/main/res/layout/add_house_activity.xml" value="0.33" />
+        <entry key="..\:/GitHub/Apputvikling_Mappe3/app/src/main/res/layout/add_house_fragment.xml" value="0.23697916666666666" />
         <entry key="..\:/GitHub/Apputvikling_Mappe3/app/src/main/res/layout/toolbar.xml" value="0.2421875" />
-        <entry key="..\:/GitHub/Apputvikling_Mappe3/app/src/main/res/menu/list_menu.xml" value="0.1828125" />
+        <entry key="..\:/GitHub/Apputvikling_Mappe3/app/src/main/res/menu/list_menu.xml" value="0.33" />
         <entry key="..\:/GitHub/Apputvikling_Mappe3/app/src/main/res/menu/toolbar.xml" value="0.2421875" />
+        <entry key="..\:/GitHub/Apputvikling_Mappe3/app/src/main/res/xml/add_house_fragment.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.11666666666666667" />
       </map>
     </option>
