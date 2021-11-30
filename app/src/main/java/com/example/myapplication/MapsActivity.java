@@ -14,6 +14,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.myapplication.databinding.ActivityMapsBinding;
@@ -62,6 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        setMapStyle();
 
 
         LatLng p35 = new LatLng(59.91941,10.73478);
@@ -221,5 +223,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             System.out.println(result);
             System.out.println(valid);
         }
+    }
+    public void setMapStyle(){
+        //mMap.setBuildingsEnabled(false);
+        MapStyleOptions mapStyleOptions = new MapStyleOptions("[" +
+                "  {" +
+                "    \"featureType\":\"poi\"," + // can spesify with poi.business, etc.
+                "    \"elementType\":\"all\"," +
+                "    \"stylers\":[" +
+                "      {" +
+                "        \"visibility\":\"off\"" +
+                "      }" +
+                "    ]" +
+                "  }," +
+                "  {" +
+                "    \"featureType\":\"transit\"," +
+                "    \"elementType\":\"all\"," +
+                "    \"stylers\":[" +
+                "      {" +
+                "        \"visibility\":\"off\"" +
+                "      }" +
+                "    ]" +
+                "  }" +
+                "]");
+        mMap.setMapStyle(mapStyleOptions);
     }
 }
