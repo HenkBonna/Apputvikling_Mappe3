@@ -214,7 +214,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
         protected void onPostExecute(String result){
+            boolean valid = false;
+            if (result.matches("[A-ZÆØÅa-zæøå\\s\\.\\']{4,30} [0-9]{1,5}, [0-9]{4} [A-ZÆØÅa-zæøå]{2,20}, [A-ZÆØÅa-zæøå]{2,20}")){
+                valid = true;
+            }
             System.out.println(result);
+            System.out.println(valid);
         }
     }
 }
