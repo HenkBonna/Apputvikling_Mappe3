@@ -1,8 +1,12 @@
 package com.example.myapplication;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.fragment.app.FragmentActivity;
@@ -16,6 +20,7 @@ public class AddHouseActivity extends FragmentActivity {
     private EditText edit_address, edit_description, edit_lat, edit_lng, edit_floors;
     private LatLng latLng;
     private String address;
+    private Button save;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -28,6 +33,8 @@ public class AddHouseActivity extends FragmentActivity {
         edit_lat = findViewById(R.id.edit_coordinate_lat);
         edit_lng = findViewById(R.id.edit_coordinate_lng);
         edit_floors = findViewById(R.id.edit_floors);
+        save = findViewById(R.id.save);
+        save.setEnabled(false);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null){
@@ -39,17 +46,157 @@ public class AddHouseActivity extends FragmentActivity {
             edit_lat.setText(lat_string);
             edit_lng.setText(lng_string);
         }
+        edit_address.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkFieldsNotEmpty();
+            }
+        });
+        edit_description.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkFieldsNotEmpty();
+            }
+        });
+        edit_lat.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkFieldsNotEmpty();
+            }
+        });
+        edit_lng.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkFieldsNotEmpty();
+            }
+        });
+        edit_floors.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkFieldsNotEmpty();
+            }
+        });
+    }
+
+    private void checkFieldsNotEmpty() {
+        if (edit_address.getText() != null
+                && edit_description.getText() != null
+                && edit_lat.getText() != null
+                && edit_lng.getText() != null
+                && edit_floors.getText() != null){
+            save.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        cancel();
     }
 
     public void saveHouse(View view) {
-        if (latLng != null){
-            String address = String.valueOf(edit_address.getText());
-            String description = String.valueOf(edit_description.getText());
-            int floors = Integer.parseInt(String.valueOf(edit_floors.getText()));
-            map.addMarker(new MarkerOptions().position(latLng).title(address));
+        AlertDialog.Builder alertDialog_Builder = new AlertDialog.Builder(this);
+        alertDialog_Builder.setCancelable(false);
+        alertDialog_Builder.setMessage("Lagre hus?");
+        alertDialog_Builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Double lat = Double.parseDouble(String.valueOf(edit_lat.getText()));
+                Double lng = Double.parseDouble(String.valueOf(edit_lng.getText()));
+                LatLng latLong = new LatLng(lat, lng);
 
-            //TODO Save this to web server
-            finish();
-        }
+                String address = String.valueOf(edit_address.getText());
+                String description = String.valueOf(edit_description.getText());
+                int floors = Integer.parseInt(String.valueOf(edit_floors.getText()));
+
+                map.addMarker(new MarkerOptions().position(latLong).title(address));
+
+                //TODO Save this to web server
+                finish();
+            }
+        });
+        alertDialog_Builder.setNegativeButton("Nei", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialog_Builder.create();
+        alertDialog.show();
+    }
+
+    public void cancel(View view) {
+        cancel();
+    }
+
+    public void cancel(){
+        AlertDialog.Builder alertDialog_Builder = new AlertDialog.Builder(this);
+        alertDialog_Builder.setCancelable(true);
+        alertDialog_Builder.setTitle("Avbryt?");
+        alertDialog_Builder.setMessage("Avryt uten å legge til hus?");
+        alertDialog_Builder.setPositiveButton("Ja, avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        alertDialog_Builder.setNegativeButton("Nei, bli her", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alertDialog = alertDialog_Builder.create();
+        alertDialog.show();
     }
 }
