@@ -102,7 +102,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private class getJSON extends AsyncTask<String, Void, String> {
-        JSONObject jsonObject;
+        //JSONObject jsonObject;
         @Override
         protected String doInBackground(String... urls) {
             String retur = "";
@@ -127,8 +127,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         JSONArray array = new JSONArray(output);
                         for (int i = 0; i < array.length(); i++){
                             JSONObject object = array.getJSONObject(i);
+                            String id = object.getString("id");
+                            String beskrivelse = object.getString("beskrivelse");
+                            String gateadresse = object.getString("gateadresse");
                             String latitude = object.getString("latitude");
-                            retur = retur + latitude + "\n";
+                            String longitude = object.getString("longitude");
+                            String object_string = "{'id':'" + id + "', 'beskrivelse':'" + beskrivelse
+                                    + "', 'gateadresse':'" + gateadresse  + "', 'latitude':'" + latitude
+                                    + "', 'longitude':'" + longitude + "'}";
+                            retur = retur + object_string + "\n";
                         }
                         return retur;
                     } catch (JSONException e) {
@@ -145,6 +152,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected void onPostExecute(String s) {
             System.out.println("#####\n" + s);
+
         }
 
     }
