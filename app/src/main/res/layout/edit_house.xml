@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/house_id"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="none"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <TextView
+        android:id="@+id/edit_address_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Adresse"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/edit_house_address"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_house_address"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_address_label"
+        app:layout_constraintWidth_percent="0.8"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/edit_description_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Beskrivelse"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/edit_house_floors"
+        app:layout_constraintTop_toBottomOf="@+id/edit_house_floors" />
+
+    <EditText
+        android:id="@+id/edit_house_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@+id/edit_description_label"
+        app:layout_constraintTop_toBottomOf="@+id/edit_description_label"
+        app:layout_constraintWidth_percent="0.8"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/edit_coordinate_label_lat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Breddegrad"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/edit_house_address"
+        app:layout_constraintTop_toBottomOf="@+id/edit_house_address" />
+
+    <EditText
+        android:id="@+id/edit_house_coordinate_lat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@+id/edit_coordinate_label_lat"
+        app:layout_constraintTop_toBottomOf="@+id/edit_coordinate_label_lat"
+        app:layout_constraintWidth_percent="0.8"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/edit_coordinate_label_lng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Lengdegrad"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/edit_house_coordinate_lat"
+        app:layout_constraintTop_toBottomOf="@+id/edit_house_coordinate_lat" />
+
+    <EditText
+        android:id="@+id/edit_house_coordinate_lng"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@+id/edit_coordinate_label_lng"
+        app:layout_constraintTop_toBottomOf="@+id/edit_coordinate_label_lng"
+        app:layout_constraintWidth_percent="0.8"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/edit_floors_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Etasjer"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/edit_house_coordinate_lng"
+        app:layout_constraintTop_toBottomOf="@+id/edit_house_coordinate_lng" />
+
+    <EditText
+        android:id="@+id/edit_house_floors"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@+id/edit_floors_label"
+        app:layout_constraintTop_toBottomOf="@+id/edit_floors_label"
+        app:layout_constraintWidth_percent="0.8"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/save_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:onClick="saveEdit"
+        android:text="Lagre endring"
+        app:layout_constraintStart_toStartOf="@+id/edit_house_description"
+        app:layout_constraintTop_toBottomOf="@+id/edit_house_description"
+        app:layout_constraintWidth_percent="0.38" />
+
+    <Button
+        android:id="@+id/cancel_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:onClick="cancel"
+        android:text="Avbryt"
+        app:layout_constraintEnd_toEndOf="@+id/edit_house_description"
+        app:layout_constraintTop_toBottomOf="@+id/edit_house_description"
+        app:layout_constraintWidth_percent="0.38" />
+</androidx.constraintlayout.widget.ConstraintLayout>
