@@ -46,7 +46,11 @@
             android:name=".AddHouseActivity"
             android:parentActivityName=".MapsActivity"
             android:launchMode="singleTop">
-
+        </activity>
+        <activity
+            android:name=".SearchField"
+            android:parentActivityName=".MapsActivity"
+            android:launchMode="singleTop">
         </activity>
     </application>
 
