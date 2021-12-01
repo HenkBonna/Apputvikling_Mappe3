@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,14 +38,13 @@ import java.util.ArrayList;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     public static GoogleMap mMap;
     private ActivityMapsBinding binding;
+    private Toolbar toolbar;
     public ArrayList<String> buildings = new ArrayList<>();
     public JSONArray buildings_JSON = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.toolbar);
-        Toolbar toolbar = findViewById(R.id.toolbar);
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -53,8 +53,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mapFragment.setHasOptionsMenu(true);
+        /*
+        toolbar = findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.list_menu);
         setActionBar(toolbar);
+        getActionBar().setTitle(null);
+        toolbar.setNavigationIcon(R.drawable.icons8_plus);
+        */
     }
 
     @Override
@@ -89,13 +94,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 getAddress(latLng);
             }
         });
-
-
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
 
     private void populate() {
         System.out.println("##### 099 : Du er i populate \n");
@@ -210,75 +210,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getAddress.execute();
     }
 
-    public void getCoordinates(){
-        GetLocationTask get_coordinates = new GetLocationTask("Østre Årefjordvei 154");
-        get_coordinates.execute();
-    }
-
-    private class GetLocationTask extends AsyncTask<Void, Void, String>{
-        JSONObject jsonObject;
-        String address;
-        String location;
-
-        public GetLocationTask(String address){
-            this.address = address;
-        }
-
-        @Override
-        protected String doInBackground(Void... voids){
-            String s = "";
-            String output = "";
-            String query = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-                    address.replaceAll(" ", "%20") +
-                    "&key=AIzaSyAaPT9tMV9E8RBUSLBCNNRr0-T9dd1nG1s";
-            try {
-                URL url = new URL(query);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setRequestProperty("Accept", "application/json");
-
-                if (connection.getResponseCode() != 200){
-                    throw new RuntimeException("Failed: HTTP error code: "
-                            + connection.getResponseCode());
-                }
-
-                BufferedReader br = new BufferedReader(
-                        new InputStreamReader(connection.getInputStream()));
-
-                while ((s = br.readLine()) != null){
-                    output += s;
-                }
-
-                jsonObject = new JSONObject(output);
-                connection.disconnect();
-
-                Double longitude = (double) 0;
-                Double latitude = (double) 0;
-                longitude = ((JSONArray) jsonObject.get("results"))
-                        .getJSONObject(0)
-                        .getJSONObject("geometry")
-                        .getJSONObject("location")
-                        .getDouble("lng");
-                latitude = ((JSONArray) jsonObject.get("results"))
-                        .getJSONObject(0)
-                        .getJSONObject("geometry")
-                        .getJSONObject("location")
-                        .getDouble("lat");
-
-                location = String.valueOf(longitude) + ":" + String.valueOf(latitude);
-                return location;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        protected void onPostExecute(String result){
-            System.out.println(result);
-        }
-    }
-
     private class GetAddress extends AsyncTask<LatLng, Void, String>{
+
         JSONObject jsonObject;
         String address;
         double lat, lng;
@@ -341,6 +274,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+
     public void setMapStyle(){
         //mMap.setBuildingsEnabled(false);
         MapStyleOptions mapStyleOptions = new MapStyleOptions("[" +

@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -159,7 +160,8 @@ public class AddHouseActivity extends FragmentActivity {
                 int floors = Integer.parseInt(String.valueOf(edit_floors.getText()));
 
                 map.addMarker(new MarkerOptions().position(latLong).title(address));
-
+                map.moveCamera(CameraUpdateFactory.newLatLng(latLong));
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLong, 18));
                 //TODO Save this to web server
                 finish();
             }
