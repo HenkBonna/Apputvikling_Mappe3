@@ -28,6 +28,9 @@ $output[]=$row;
 print(json_encode($output));
 ?>
 
+<!-- test URL -->
+http://studdata.cs.oslomet.no/~dbuser28/hentallehus.php
+
 <!-- Fetch single house -->
 
 <?php
