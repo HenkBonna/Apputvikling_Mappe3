@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class EditHouse extends FragmentActivity {
     private GoogleMap map;
-    private EditText edit_address, edit_description, edit_lat, edit_lng, edit_floors;
+    private EditText house_id, edit_address, edit_description, edit_lat, edit_lng, edit_floors;
     private LatLng latLng;
     private String address;
     private Button save;
@@ -25,6 +25,7 @@ public class EditHouse extends FragmentActivity {
         setContentView(R.layout.edit_house);
         map = MapsActivity.mMap;
 
+        house_id = findViewById(R.id.house_id);
         edit_address = findViewById(R.id.edit_house_address);
         edit_description = findViewById(R.id.edit_house_description);
         edit_lat = findViewById(R.id.edit_house_coordinate_lat);
@@ -38,6 +39,7 @@ public class EditHouse extends FragmentActivity {
             String lat_string = "" + latLng.latitude;
             String lng_string = "" + latLng.longitude;
             address = extras.getString("address");
+            house_id.setText(extras.getInt("id"));
             edit_address.setText(address);
             edit_lat.setText(lat_string);
             edit_lng.setText(lng_string);
@@ -138,10 +140,27 @@ public class EditHouse extends FragmentActivity {
         }
     }
 
-    public void cancel(View view) {
+    @Override
+    public void onBackPressed(){
+        cancel();
+    }
+
+    public void cancel() {
         finish();
     }
 
     public void saveEdit(View view) {
+        int id = Integer.parseInt(String.valueOf(house_id.getText()));
+        Double lat = Double.parseDouble(String.valueOf(edit_lat.getText()));
+        Double lng = Double.parseDouble(String.valueOf(edit_lng.getText()));
+        LatLng latLong = new LatLng(lat, lng);
+
+        String address = String.valueOf(edit_address.getText());
+        String description = String.valueOf(edit_description.getText());
+        int floors = Integer.parseInt(String.valueOf(edit_floors.getText()));
+
+        //TODO: httprequest, put/update, endrehus.php
+        //TODO Save this to web server
+        finish();
     }
 }
