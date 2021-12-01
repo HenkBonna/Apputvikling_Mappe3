@@ -7,12 +7,12 @@ public class House {
     private LatLng latLng;
     private int floors, id;
 
-    public House(int id, String address, String description, LatLng latLng, int floors) {
+    public House(int id, String description, String address, int floors, LatLng latLng) {
         this.id = id;
-        this.address = address;
         this.description = description;
-        this.latLng = latLng;
+        this.address = address;
         this.floors = floors;
+        this.latLng = latLng;
     }
 
     public int getId() {

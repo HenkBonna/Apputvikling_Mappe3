@@ -39,7 +39,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static GoogleMap mMap;
     private ActivityMapsBinding binding;
     private Toolbar toolbar;
-    public ArrayList<String> buildings = new ArrayList<>();
+    public ArrayList<House> houses = new ArrayList<>();
     public JSONArray buildings_JSON = new JSONArray();
 
     @Override
@@ -157,7 +157,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected void onPostExecute(String s) {
             System.out.println("## 155 ###\n" + s);
-            buildings.add(s);
+            //buildings.add(s);
             //buildings_JSON.
 
             generateMarkers();
@@ -171,17 +171,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             JSONObject object = null;
             try {
                 object = buildings_JSON.getJSONObject(i);
-                String id = object.getString("id");
+                int id = Integer.parseInt(object.getString("id"));
                 String beskrivelse = object.getString("beskrivelse");
                 String gateadresse = object.getString("gateadresse");
-                String latitude = object.getString("latitude");
-                String longitude = object.getString("longitude");
+                int etasjer = Integer.parseInt(object.getString("etasjer"));
+                Double latitude = Double.parseDouble(object.getString("latitude"));
+                Double longitude = Double.parseDouble(object.getString("longitude"));
+
+                LatLng latLng = new LatLng(latitude, longitude);
 
                 // TODO: If we implement a class, do it here!
-
-                addSingleMarker(id, beskrivelse, gateadresse, latitude, longitude);
-
-
+                House house = new House(id, beskrivelse, gateadresse, etasjer, latLng);
+                houses.add(house);
 
 
             } catch (JSONException e) {
@@ -189,16 +190,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
 
-        /*
-        for (String s : buildings){
-            try {
-                JSONObject object = new JSONObject(s);
-                System.out.println(object.getString("beskrivelse"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        for (House h : houses){
+            mMap.addMarker(new MarkerOptions().position(h.getLatLng()).title(h.getDescription()));
         }
-         */
     }
 
     private void addSingleMarker(String id, String beskrivelse, String gateadresse, String latitude, String longitude) {
