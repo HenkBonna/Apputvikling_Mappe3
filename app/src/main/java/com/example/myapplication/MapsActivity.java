@@ -32,11 +32,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
     public static GoogleMap mMap;
     private ActivityMapsBinding binding;
+    public ArrayList<String> buildings = new ArrayList<>();
+    public JSONArray buildings_JSON = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,15 +127,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     httpURLConnection.disconnect();
                     try {
                         JSONArray array = new JSONArray(output);
+                        buildings_JSON = new JSONArray(output);
                         for (int i = 0; i < array.length(); i++){
                             JSONObject object = array.getJSONObject(i);
                             String id = object.getString("id");
                             String beskrivelse = object.getString("beskrivelse");
                             String gateadresse = object.getString("gateadresse");
+                            String etasjer = object.getString("etasjer");
                             String latitude = object.getString("latitude");
                             String longitude = object.getString("longitude");
                             String object_string = "{'id':'" + id + "', 'beskrivelse':'" + beskrivelse
-                                    + "', 'gateadresse':'" + gateadresse  + "', 'latitude':'" + latitude
+                                    + "', 'gateadresse':'" + gateadresse  + "', 'etasjer':'" + etasjer  + "', 'latitude':'" + latitude
                                     + "', 'longitude':'" + longitude + "'}";
                             retur = retur + object_string + "\n";
                         }
@@ -146,15 +150,59 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     return "Noe gikk feil.";
                 }
             }
+            System.out.println("## 150 ###\n" + retur);
             return retur;
         }
 
         @Override
         protected void onPostExecute(String s) {
-            System.out.println("#####\n" + s);
+            System.out.println("## 155 ###\n" + s);
+            buildings.add(s);
+            //buildings_JSON.
 
+            generateMarkers();
         }
 
+    }
+
+    private void generateMarkers() {
+        System.out.println("## 168 generateMarkers() ###\n");
+        for (int i = 0; i < buildings_JSON.length(); i++){
+            JSONObject object = null;
+            try {
+                object = buildings_JSON.getJSONObject(i);
+                String id = object.getString("id");
+                String beskrivelse = object.getString("beskrivelse");
+                String gateadresse = object.getString("gateadresse");
+                String latitude = object.getString("latitude");
+                String longitude = object.getString("longitude");
+
+                // TODO: If we implement a class, do it here!
+
+                addSingleMarker(id, beskrivelse, gateadresse, latitude, longitude);
+
+
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /*
+        for (String s : buildings){
+            try {
+                JSONObject object = new JSONObject(s);
+                System.out.println(object.getString("beskrivelse"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+         */
+    }
+
+    private void addSingleMarker(String id, String beskrivelse, String gateadresse, String latitude, String longitude) {
+        // TODO: Implement
     }
 
     public void getAddress(LatLng latLng){
