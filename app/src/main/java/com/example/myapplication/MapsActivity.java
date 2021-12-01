@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
+import android.icu.text.SymbolTable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -65,6 +66,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         setMapStyle();
+        populate();
 
 
         LatLng p35 = new LatLng(59.91941,10.73478);
@@ -91,6 +93,60 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //LatLng sydney = new LatLng(-34, 151);
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    private void populate() {
+        System.out.println("##### 099 : Du er i populate \n");
+        getJSON task = new getJSON();
+        task.execute(new String[] {"http://studdata.cs.oslomet.no/~dbuser28/hentallehus.php"});
+    }
+
+    private class getJSON extends AsyncTask<String, Void, String> {
+        JSONObject jsonObject;
+        @Override
+        protected String doInBackground(String... urls) {
+            String retur = "";
+            String s = "";
+            String output = "";
+            for (String url : urls) {
+                try{
+                    URL the_url = new URL(urls[0]);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) the_url.openConnection();
+                    httpURLConnection.setRequestMethod("GET");
+                    httpURLConnection.setRequestProperty("ACccept", "application/json");
+                    if (httpURLConnection.getResponseCode() != 200) {
+                        throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
+                    }
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                    System.out.println("Output from server ..... \n");
+                    while ((s = bufferedReader.readLine()) != null) {
+                        output = output + s;
+                    }
+                    httpURLConnection.disconnect();
+                    try {
+                        JSONArray array = new JSONArray(output);
+                        for (int i = 0; i < array.length(); i++){
+                            JSONObject object = array.getJSONObject(i);
+                            String latitude = object.getString("latitude");
+                            retur = retur + latitude + "\n";
+                        }
+                        return retur;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                catch (Exception e){
+                    return "Noe gikk feil.";
+                }
+            }
+            return retur;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            System.out.println("#####\n" + s);
+        }
+
     }
 
     public void getAddress(LatLng latLng){
@@ -227,6 +283,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return null;
             }
         }
+
     }
     public void setMapStyle(){
         //mMap.setBuildingsEnabled(false);
