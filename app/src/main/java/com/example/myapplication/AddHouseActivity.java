@@ -159,6 +159,7 @@ public class AddHouseActivity extends FragmentActivity {
                 String description = String.valueOf(edit_description.getText());
                 int floors = Integer.parseInt(String.valueOf(edit_floors.getText()));
 
+                // TODO: httprequest, post, lagrehus.php
                 map.addMarker(new MarkerOptions().position(latLong).title(address));
                 map.moveCamera(CameraUpdateFactory.newLatLng(latLong));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLong, 18));
