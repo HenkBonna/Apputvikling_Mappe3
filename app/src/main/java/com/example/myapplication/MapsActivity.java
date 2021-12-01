@@ -126,9 +126,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     httpURLConnection.disconnect();
                     try {
-                        JSONArray array = new JSONArray(output);
+                        //JSONArray array = new JSONArray(output);
                         buildings_JSON = new JSONArray(output);
-                        for (int i = 0; i < array.length(); i++){
+                        /*for (int i = 0; i < array.length(); i++){
                             JSONObject object = array.getJSONObject(i);
                             String id = object.getString("id");
                             String beskrivelse = object.getString("beskrivelse");
@@ -141,6 +141,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     + "', 'longitude':'" + longitude + "'}";
                             retur = retur + object_string + "\n";
                         }
+
+                         */
                         return retur;
                     } catch (JSONException e) {
                         e.printStackTrace();
