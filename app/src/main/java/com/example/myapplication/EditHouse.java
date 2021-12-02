@@ -216,12 +216,13 @@ public class EditHouse extends FragmentActivity {
                     }
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                     System.out.println("Output from server ..... \n");
+                    System.out.println("## EditHouseActivity @ 219 ###\n" + output);
                     while ((s = bufferedReader.readLine()) != null) {
                         output = output + s;
                     }
                     httpURLConnection.disconnect();
                     try {
-                        System.out.println("## AddHouseActivity @ 244 ###\n");
+                        System.out.println("## EditHouseActivity @ 224 ###\n");
                         return retur;
                     } catch (Exception e) {
                         e.printStackTrace();
