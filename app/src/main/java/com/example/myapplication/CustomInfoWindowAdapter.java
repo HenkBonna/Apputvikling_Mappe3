@@ -3,6 +3,8 @@ package com.example.myapplication;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,9 +27,6 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     private void renderWindowText(Marker marker, View view){
         House house = (House) marker.getTag();
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.list_menu);
-        //marker.setActionBar(toolbar);
         TextView address = view.findViewById(R.id.address),
                 coordinates = view.findViewById(R.id.coordinates),
                 floors = view.findViewById(R.id.floors),

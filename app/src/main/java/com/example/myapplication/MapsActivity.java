@@ -58,7 +58,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         toolbar.inflateMenu(R.menu.list_menu);
         setActionBar(toolbar);
         getActionBar().setTitle(null);
-        toolbar.setNavigationIcon(R.drawable.icons8_plus);
         */
     }
 
@@ -77,7 +76,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         LatLng p35 = new LatLng(59.91941,10.73478);
-        mMap.addMarker(new MarkerOptions().position(p35).title("Markør på P35"));
+        //mMap.addMarker(new MarkerOptions().position(p35).title("Markør på P35"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p35));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(p35, 18));
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapsActivity.this));
@@ -101,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 getAddress(latLng);
             }
         });
+        mMap.getUiSettings().setMapToolbarEnabled(false);
     }
 
 
@@ -108,6 +108,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         System.out.println("##### 099 : Du er i populate \n");
         getJSON task = new getJSON();
         task.execute(new String[] {"http://studdata.cs.oslomet.no/~dbuser28/hentallehus.php"});
+    }
+
+    public void addByAddress(View view) {
+        Intent intent = new Intent(this, SearchField.class);
+        startActivity(intent);
     }
 
     private class getJSON extends AsyncTask<String, Void, String> {
