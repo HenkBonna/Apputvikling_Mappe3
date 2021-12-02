@@ -1,140 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/add_house_container"
-    android:layout_gravity="center_horizontal">
-
-    <TextView
-        android:id="@+id/address_label"
-        android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Adresse"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/edit_address"
-        app:layout_constraintTop_toTopOf="parent" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/add_house_container"
+        android:layout_gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/edit_address"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address_label"
-        app:layout_constraintWidth_percent="0.8"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/address_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Adresse"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/edit_address"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/description_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Beskrivelse"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/edit_floors"
-        app:layout_constraintTop_toBottomOf="@+id/edit_floors" />
+        <EditText
+            android:id="@+id/edit_address"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address_label"
+            app:layout_constraintWidth_percent="0.8"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
-        android:id="@+id/edit_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@+id/description_label"
-        app:layout_constraintTop_toBottomOf="@+id/description_label"
-        app:layout_constraintWidth_percent="0.8"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/description_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Beskrivelse"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/edit_floors"
+            app:layout_constraintTop_toBottomOf="@+id/edit_floors" />
 
-    <TextView
-        android:id="@+id/coordinate_label_lat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Breddegrad"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/edit_address"
-        app:layout_constraintTop_toBottomOf="@+id/edit_address" />
+        <EditText
+            android:id="@+id/edit_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="@+id/description_label"
+            app:layout_constraintTop_toBottomOf="@+id/description_label"
+            app:layout_constraintWidth_percent="0.8"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
-        android:id="@+id/edit_coordinate_lat"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@+id/coordinate_label_lat"
-        app:layout_constraintTop_toBottomOf="@+id/coordinate_label_lat"
-        app:layout_constraintWidth_percent="0.8"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/coordinate_label_lat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Breddegrad"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/edit_address"
+            app:layout_constraintTop_toBottomOf="@+id/edit_address" />
 
-    <TextView
-        android:id="@+id/coordinate_label_lng"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Lengdegrad"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/edit_coordinate_lat"
-        app:layout_constraintTop_toBottomOf="@+id/edit_coordinate_lat" />
+        <EditText
+            android:id="@+id/edit_coordinate_lat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="@+id/coordinate_label_lat"
+            app:layout_constraintTop_toBottomOf="@+id/coordinate_label_lat"
+            app:layout_constraintWidth_percent="0.8"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
-        android:id="@+id/edit_coordinate_lng"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@+id/coordinate_label_lng"
-        app:layout_constraintTop_toBottomOf="@+id/coordinate_label_lng"
-        app:layout_constraintWidth_percent="0.8"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/coordinate_label_lng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Lengdegrad"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/edit_coordinate_lat"
+            app:layout_constraintTop_toBottomOf="@+id/edit_coordinate_lat" />
 
-    <TextView
-        android:id="@+id/floors_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Etasjer"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/edit_coordinate_lng"
-        app:layout_constraintTop_toBottomOf="@+id/edit_coordinate_lng" />
+        <EditText
+            android:id="@+id/edit_coordinate_lng"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="@+id/coordinate_label_lng"
+            app:layout_constraintTop_toBottomOf="@+id/coordinate_label_lng"
+            app:layout_constraintWidth_percent="0.8"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
-        android:id="@+id/edit_floors"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@+id/floors_label"
-        app:layout_constraintTop_toBottomOf="@+id/floors_label"
-        app:layout_constraintWidth_percent="0.8"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/floors_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Etasjer"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/edit_coordinate_lng"
+            app:layout_constraintTop_toBottomOf="@+id/edit_coordinate_lng" />
 
-    <Button
-        android:id="@+id/save"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:onClick="saveHouse"
-        android:text="Lagre hus"
-        app:layout_constraintStart_toStartOf="@+id/edit_description"
-        app:layout_constraintTop_toBottomOf="@+id/edit_description"
-        app:layout_constraintWidth_percent="0.35" />
+        <EditText
+            android:id="@+id/edit_floors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="@+id/floors_label"
+            app:layout_constraintTop_toBottomOf="@+id/floors_label"
+            app:layout_constraintWidth_percent="0.8"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-    <Button
-        android:id="@+id/cancel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:onClick="cancel"
-        android:text="Avbryt"
-        app:layout_constraintEnd_toEndOf="@+id/edit_description"
-        app:layout_constraintTop_toBottomOf="@+id/edit_description"
-        app:layout_constraintWidth_percent="0.35" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="saveHouse"
+            android:text="Lagre hus"
+            app:layout_constraintStart_toStartOf="@+id/edit_description"
+            app:layout_constraintTop_toBottomOf="@+id/edit_description"
+            app:layout_constraintWidth_percent="0.35" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="cancel"
+            android:text="Avbryt"
+            app:layout_constraintEnd_toEndOf="@+id/edit_description"
+            app:layout_constraintTop_toBottomOf="@+id/edit_description"
+            app:layout_constraintWidth_percent="0.35" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
