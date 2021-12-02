@@ -80,14 +80,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(p35).title("Markør på P35"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p35));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(p35, 18));
+        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapsActivity.this));
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
-                System.out.println("Marker clicked " + marker.getTitle());
+                marker.showInfoWindow();
                 return false;
             }
         });
 
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(@NonNull Marker marker) {
+                marker.hideInfoWindow();
+            }
+        });
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull LatLng latLng) {
@@ -194,7 +201,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         for (House h : houses){
-            mMap.addMarker(new MarkerOptions().position(h.getLatLng()).title(h.getDescription()));
+            Marker marker = mMap.addMarker(
+                    new MarkerOptions()
+                            .position(h.getLatLng())
+                            .title(h.getDescription()));
+            assert marker != null;
+            marker.setTag(h);
         }
     }
 
