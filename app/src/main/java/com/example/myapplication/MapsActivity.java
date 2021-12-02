@@ -140,6 +140,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     + "', 'gateadresse':'" + gateadresse  + "', 'etasjer':'" + etasjer  + "', 'latitude':'" + latitude
                                     + "', 'longitude':'" + longitude + "'}";
                             retur = retur + object_string + "\n";
+                            Test
                         }
 
                          */
