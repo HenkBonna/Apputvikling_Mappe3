@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,12 +14,18 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class EditHouse extends FragmentActivity {
     private GoogleMap map;
     private EditText house_id, edit_address, edit_description, edit_lat, edit_lng, edit_floors;
     private LatLng latLng;
     private String address;
     private Button save;
+    public House houseToEdit;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -155,12 +163,89 @@ public class EditHouse extends FragmentActivity {
         Double lng = Double.parseDouble(String.valueOf(edit_lng.getText()));
         LatLng latLong = new LatLng(lat, lng);
 
+        @SuppressLint("DefaultLocale") String lat_formatted = String.format("%,.5f", lat);
+        @SuppressLint("DefaultLocale") String lng_formatted = String.format("%,.5f", lng);
+
         String address = String.valueOf(edit_address.getText());
         String description = String.valueOf(edit_description.getText());
         int floors = Integer.parseInt(String.valueOf(edit_floors.getText()));
+
+        //####################################################
+
+        houseToEdit =  new House(id, description, address, floors, latLong);
+
+        String url = "http://studdata.cs.oslomet.no/~dbuser28/endrehus.php/" +
+                "?Id=" + id +
+                "&Beskrivelse=" + description.replaceAll(" ", "%20") +
+                "&Gateadresse=" + address.replaceAll(" ", "%20") +
+                "&Etasjer=" + floors +
+                "&Latitude=" + lat_formatted +
+                "&Longitude=" + lng_formatted;
+
+        PostEditedHouse task = new PostEditedHouse();
+        task.execute(new String[] {url});
+
+        //####################################################
 
         //TODO: httprequest, put/update, endrehus.php
         //TODO Save this to web server
         finish();
     }
+
+    //####################################################
+
+    private class PostEditedHouse extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String retur = "";
+            String s = "";
+            String output = "";
+            for (String url : urls) {
+                try {
+                    URL the_url = new URL(urls[0]);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) the_url.openConnection();
+                    httpURLConnection.setRequestMethod("PUT");
+                    httpURLConnection.setRequestProperty("Accept", "application/json");
+                    if (httpURLConnection.getResponseCode() != 200) {
+                        throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
+                    }
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                    System.out.println("Output from server ..... \n");
+                    while ((s = bufferedReader.readLine()) != null) {
+                        output = output + s;
+                    }
+                    httpURLConnection.disconnect();
+                    try {
+                        System.out.println("## AddHouseActivity @ 244 ###\n");
+                        return retur;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    return "Noe gikk feil.";
+                }
+            }
+            System.out.println("## AddHouseActivity 266 ###\n" + retur);
+            return retur;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            System.out.println("## AddHouseActivity @ 257 ###\n" + s);
+            try {
+                //houseToEdit.setId(-1); // we should have post return Id as s.
+                //addHouse(houseToSave);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    //####################################################
+
+
+
 }
