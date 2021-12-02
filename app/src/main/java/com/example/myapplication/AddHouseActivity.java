@@ -281,8 +281,9 @@ public class AddHouseActivity extends FragmentActivity {
         protected void onPostExecute(String s) {
             System.out.println("## AddHouseActivity @ 257 ###\n" + s);
             try {
-                houseToSave.setId(-1); // we should have post return Id as s.
+                //houseToSave.setId(-1); // we should have post return Id as s.
                 //addHouse(houseToSave);
+                // TODO: Refresh houses? Render markers again?
             } catch (Exception e) {
                 e.printStackTrace();
             }
