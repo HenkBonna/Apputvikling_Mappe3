@@ -13,13 +13,6 @@
         android:layout_margin="2dp"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#B8B8B8"
-            app:title="Rediger"
-            />
         <TextView
             android:id="@+id/address_title"
             android:layout_width="wrap_content"
