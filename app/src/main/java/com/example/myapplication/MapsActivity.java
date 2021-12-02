@@ -410,12 +410,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         protected void onPostExecute(String s) {
-            //System.out.println("## AddHouseActivity @ 257 ###\n" + s);
             try {
-                //houseToEdit.setId(-1); // we should have post return Id as s.
-                //addHouse(houseToSave);
-                // TODO: Refresh houses? Render markers again?
-                recreate();
+                active_marker.remove();
+                active_marker = null;
+                edit_button.setEnabled(false);
+                edit_button.setVisibility(View.INVISIBLE);
+                delete_button.setEnabled(false);
+                delete_button.setVisibility(View.INVISIBLE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
