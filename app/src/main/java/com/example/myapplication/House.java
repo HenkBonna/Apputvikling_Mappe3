@@ -15,6 +15,14 @@ public class House {
         this.latLng = latLng;
     }
 
+    public House(String description, String address, int floors, LatLng latLng) {
+        this.id = -1;
+        this.description = description;
+        this.address = address;
+        this.floors = floors;
+        this.latLng = latLng;
+    }
+
     public int getId() {
         return id;
     }
