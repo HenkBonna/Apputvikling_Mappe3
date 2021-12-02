@@ -40,6 +40,7 @@ import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     public static GoogleMap mMap;
+    public static boolean refresh = false;
     private ActivityMapsBinding binding;
     public ArrayList<House> houses = new ArrayList<>();
     public JSONArray buildings_JSON = new JSONArray();
@@ -67,6 +68,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.list_menu, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(refresh){
+            clearMarkers();
+            houses.clear();
+            generateMarkers();
+        }
+    }
+
+    private void clearMarkers() {
+
     }
 
     @Override
