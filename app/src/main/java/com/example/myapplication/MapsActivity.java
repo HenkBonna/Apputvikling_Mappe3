@@ -309,4 +309,61 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMapStyle(mapStyleOptions);
     }
 
+    public void deleteHouse(int id){
+        String url = "http://studdata.cs.oslomet.no/~dbuser28/sletthus.php/" +
+                "?Id=" + id;
+        DeleteHouse task = new DeleteHouse();
+        task.execute(new String[] {url});
+    }
+
+    private class DeleteHouse extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String retur = "";
+            String s = "";
+            String output = "";
+            for (String url : urls) {
+                try {
+                    URL the_url = new URL(urls[0]);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) the_url.openConnection();
+                    httpURLConnection.setRequestMethod("DELETE");
+                    httpURLConnection.setRequestProperty("Accept", "application/json");
+                    if (httpURLConnection.getResponseCode() != 200) {
+                        throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
+                    }
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                    System.out.println("Output from server ..... \n");
+                    while ((s = bufferedReader.readLine()) != null) {
+                        output = output + s;
+                    }
+                    httpURLConnection.disconnect();
+                    try {
+                        //System.out.println("## AddHouseActivity @ 244 ###\n");
+                        return retur;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    return "Noe gikk feil.";
+                }
+            }
+            //System.out.println("## AddHouseActivity 266 ###\n" + retur);
+            return retur;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            //System.out.println("## AddHouseActivity @ 257 ###\n" + s);
+            try {
+                //houseToEdit.setId(-1); // we should have post return Id as s.
+                //addHouse(houseToSave);
+                // TODO: Refresh houses? Render markers again?
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
 }

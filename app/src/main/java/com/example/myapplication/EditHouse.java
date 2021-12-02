@@ -236,6 +236,7 @@ public class EditHouse extends FragmentActivity {
             try {
                 //houseToEdit.setId(-1); // we should have post return Id as s.
                 //addHouse(houseToSave);
+                // TODO: Refresh houses? Render markers again?
             } catch (Exception e) {
                 e.printStackTrace();
             }
