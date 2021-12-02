@@ -192,24 +192,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     httpURLConnection.disconnect();
                     try {
-                        //JSONArray array = new JSONArray(output);
                         buildings_JSON = new JSONArray(output);
-                        /*for (int i = 0; i < array.length(); i++){
-                            JSONObject object = array.getJSONObject(i);
-                            String id = object.getString("id");
-                            String beskrivelse = object.getString("beskrivelse");
-                            String gateadresse = object.getString("gateadresse");
-                            String etasjer = object.getString("etasjer");
-                            String latitude = object.getString("latitude");
-                            String longitude = object.getString("longitude");
-                            String object_string = "{'id':'" + id + "', 'beskrivelse':'" + beskrivelse
-                                    + "', 'gateadresse':'" + gateadresse  + "', 'etasjer':'" + etasjer  + "', 'latitude':'" + latitude
-                                    + "', 'longitude':'" + longitude + "'}";
-                            retur = retur + object_string + "\n";
-                            Test
-                        }
-
-                         */
                         return retur;
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -267,10 +250,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             assert marker != null;
             marker.setTag(h);
         }
-    }
-
-    private void addSingleMarker(String id, String beskrivelse, String gateadresse, String latitude, String longitude) {
-        // TODO: Implement
     }
 
     public void getAddress(LatLng latLng){
@@ -372,23 +351,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String url = "http://studdata.cs.oslomet.no/~dbuser28/sletthus.php/" +
                 "?Id=" + id;
         DeleteHouse task = new DeleteHouse();
+        System.out.println("###### 355 Mapsactivity ###");
         task.execute(new String[] {url});
     }
 
     private class DeleteHouse extends AsyncTask<String, Void, String> {
-
         @Override
         protected String doInBackground(String... urls) {
             String retur = "";
             String s = "";
             String output = "";
+            System.out.println("###### 365 Mapsactivity ###");
             for (String url : urls) {
                 try {
                     URL the_url = new URL(urls[0]);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) the_url.openConnection();
-                    httpURLConnection.setRequestMethod("DELETE");
+                    httpURLConnection.setRequestMethod("GET");
                     httpURLConnection.setRequestProperty("Accept", "application/json");
                     if (httpURLConnection.getResponseCode() != 200) {
+                        System.out.println("###### 374 Mapsactivity ###" + httpURLConnection.getResponseCode());
                         throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
                     }
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
@@ -396,6 +377,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     while ((s = bufferedReader.readLine()) != null) {
                         output = output + s;
                     }
+                    System.out.println("###### 380 Mapsactivity ###" + output);
                     httpURLConnection.disconnect();
                     try {
                         //System.out.println("## AddHouseActivity @ 244 ###\n");

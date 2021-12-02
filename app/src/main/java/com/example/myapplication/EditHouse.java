@@ -209,7 +209,7 @@ public class EditHouse extends FragmentActivity {
                 try {
                     URL the_url = new URL(urls[0]);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) the_url.openConnection();
-                    httpURLConnection.setRequestMethod("PUT");
+                    httpURLConnection.setRequestMethod("GET");
                     httpURLConnection.setRequestProperty("Accept", "application/json");
                     if (httpURLConnection.getResponseCode() != 200) {
                         throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
