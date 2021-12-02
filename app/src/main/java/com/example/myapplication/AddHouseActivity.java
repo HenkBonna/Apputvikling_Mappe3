@@ -185,7 +185,7 @@ public class AddHouseActivity extends FragmentActivity {
                         "&Latitude=" + lat_formatted +
                         "&Longitude=" + lng_formatted;
 
-                postHouse task = new postHouse();
+                PostHouse task = new PostHouse();
                 task.execute(new String[] {url});
 
                 //####################################################
@@ -235,7 +235,7 @@ public class AddHouseActivity extends FragmentActivity {
 
     //####################################################
 
-    private class postHouse extends AsyncTask<String, Void, String> {
+    private class PostHouse extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
