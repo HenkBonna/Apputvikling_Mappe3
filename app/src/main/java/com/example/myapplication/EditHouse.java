@@ -153,6 +153,10 @@ public class EditHouse extends FragmentActivity {
         cancel();
     }
 
+    public void cancel(View view) {
+        finish();
+    }
+
     public void cancel() {
         finish();
     }

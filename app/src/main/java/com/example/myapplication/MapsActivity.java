@@ -131,8 +131,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             House house = (House) active_marker.getTag();
             if (house != null) {
                 Intent intent = new Intent(this, EditHouse.class);
-                System.out.println("HusID: " + house.getId());
-                intent.putExtra("id", house.getId());
+                String id = "" + house.getId();
+                intent.putExtra("id", id);
                 intent.putExtra("address", house.getAddress());
                 intent.putExtra("lat", house.getLatLng().latitude);
                 intent.putExtra("lng", house.getLatLng().longitude);
@@ -164,7 +164,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alertDialog.show();
     }
     public void delete_house(Marker marker){
-
+        House house = (House) marker.getTag();
+        if (house != null) {
+            deleteHouse(house.getId());
+        }
     }
 
     private class getJSON extends AsyncTask<String, Void, String> {
