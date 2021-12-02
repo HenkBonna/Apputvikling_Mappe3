@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -56,8 +57,11 @@ public class AddHouseActivity extends FragmentActivity {
             String lng_string = "" + latLng.longitude;
             address = extras.getString("address");
             edit_address.setText(address);
+            edit_address.setEnabled(false);
             edit_lat.setText(lat_string);
+            edit_lat.setEnabled(false);
             edit_lng.setText(lng_string);
+            edit_lng.setEnabled(false);
         }
         edit_address.addTextChangedListener(new TextWatcher() {
             @Override
@@ -190,7 +194,9 @@ public class AddHouseActivity extends FragmentActivity {
 
                 //####################################################
 
-                map.addMarker(new MarkerOptions().position(latLong).title(address));
+                Marker marker = map.addMarker(new MarkerOptions().position(latLong).title(address));
+                assert marker != null;
+                marker.setTag(houseToSave);
                 map.moveCamera(CameraUpdateFactory.newLatLng(latLong));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLong, 18));
 
