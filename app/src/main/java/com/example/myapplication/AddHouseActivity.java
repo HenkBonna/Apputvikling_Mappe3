@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,12 +18,22 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class AddHouseActivity extends FragmentActivity {
     private GoogleMap map;
     private EditText edit_address, edit_description, edit_lat, edit_lng, edit_floors;
     private LatLng latLng;
     private String address;
     private Button save;
+    public House houseToSave;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -155,15 +167,33 @@ public class AddHouseActivity extends FragmentActivity {
                 Double lng = Double.parseDouble(String.valueOf(edit_lng.getText()));
                 LatLng latLong = new LatLng(lat, lng);
 
+                @SuppressLint("DefaultLocale") String lat_formatted = String.format("%,.5f", lat);
+                @SuppressLint("DefaultLocale") String lng_formatted = String.format("%,.5f", lng);
+
                 String address = String.valueOf(edit_address.getText());
                 String description = String.valueOf(edit_description.getText());
                 int floors = Integer.parseInt(String.valueOf(edit_floors.getText()));
 
-                // TODO: httprequest, post, lagrehus.php
+                //####################################################
+
+                houseToSave =  new House(-1, description, address, floors, latLong);
+
+                String url = "http://studdata.cs.oslomet.no/~dbuser28/lagrehus.php/" +
+                        "?Beskrivelse=" + description.replaceAll(" ", "%20") +
+                        "&Gateadresse=" + address.replaceAll(" ", "%20") +
+                        "&Etasjer=" + floors +
+                        "&Latitude=" + lat_formatted +
+                        "&Longitude=" + lng_formatted;
+
+                postHouse task = new postHouse();
+                task.execute(new String[] {url});
+
+                //####################################################
+
                 map.addMarker(new MarkerOptions().position(latLong).title(address));
                 map.moveCamera(CameraUpdateFactory.newLatLng(latLong));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLong, 18));
-                //TODO Save this to web server
+
                 finish();
             }
         });
@@ -202,4 +232,59 @@ public class AddHouseActivity extends FragmentActivity {
         AlertDialog alertDialog = alertDialog_Builder.create();
         alertDialog.show();
     }
+
+    //####################################################
+
+    private class postHouse extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String retur = "";
+            String s = "";
+            String output = "";
+            for (String url : urls) {
+                try {
+                    URL the_url = new URL(urls[0]);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) the_url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setRequestProperty("Accept", "application/json");
+                    if (httpURLConnection.getResponseCode() != 200) {
+                        throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
+                    }
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                    System.out.println("Output from server ..... \n");
+                    while ((s = bufferedReader.readLine()) != null) {
+                        output = output + s;
+                    }
+                    httpURLConnection.disconnect();
+                    try {
+                        System.out.println("## AddHouseActivity @ 244 ###\n");
+                        return retur;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    return "Noe gikk feil.";
+                }
+            }
+            System.out.println("## AddHouseActivity 266 ###\n" + retur);
+            return retur;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            System.out.println("## AddHouseActivity @ 257 ###\n" + s);
+            try {
+                houseToSave.setId(-1); // we should have post return Id as s.
+                //addHouse(houseToSave);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    //####################################################
+
 }

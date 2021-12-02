@@ -115,7 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     URL the_url = new URL(urls[0]);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) the_url.openConnection();
                     httpURLConnection.setRequestMethod("GET");
-                    httpURLConnection.setRequestProperty("ACccept", "application/json");
+                    httpURLConnection.setRequestProperty("Accept", "application/json");
                     if (httpURLConnection.getResponseCode() != 200) {
                         throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
                     }
@@ -296,4 +296,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 "]");
         mMap.setMapStyle(mapStyleOptions);
     }
+
 }
