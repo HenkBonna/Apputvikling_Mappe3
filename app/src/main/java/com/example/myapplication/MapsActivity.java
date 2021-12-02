@@ -145,28 +145,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void delete_house(View view) {
-        AlertDialog.Builder alertDialog_builder = new AlertDialog.Builder(this);
-        alertDialog_builder.setTitle("Slette hus?");
-        alertDialog_builder.setMessage("Er du sikker på at du vil slette dette huset?");
-        alertDialog_builder.setPositiveButton("Ja, slett", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                delete_house(active_marker);
-            }
-        });
-        alertDialog_builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        AlertDialog alertDialog = alertDialog_builder.create();
-        alertDialog.show();
-    }
-    public void delete_house(Marker marker){
-        House house = (House) marker.getTag();
-        if (house != null) {
-            deleteHouse(house.getId());
+        if (active_marker != null) {
+            AlertDialog.Builder alertDialog_builder = new AlertDialog.Builder(this);
+            alertDialog_builder.setTitle("Slette hus?");
+            alertDialog_builder.setMessage("Er du sikker på at du vil slette dette huset?");
+            alertDialog_builder.setPositiveButton("Ja, slett", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    House house = (House) active_marker.getTag();
+                    if (house != null) {
+                        deleteHouse(house.getId());
+                    }
+                }
+            });
+            alertDialog_builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+            AlertDialog alertDialog = alertDialog_builder.create();
+            alertDialog.show();
         }
     }
 
