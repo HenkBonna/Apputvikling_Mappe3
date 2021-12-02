@@ -47,11 +47,11 @@ public class EditHouse extends FragmentActivity {
             String lat_string = "" + latLng.latitude;
             String lng_string = "" + latLng.longitude;
             address = extras.getString("address");
-            house_id.setText(extras.getInt("id"));
+            house_id.setText(extras.getString("id"));
             edit_address.setText(address);
             edit_lat.setText(lat_string);
             edit_lng.setText(lng_string);
-            edit_floors.setText(extras.getInt("floors"));
+            edit_floors.setText(extras.getString("floors"));
             edit_description.setText(extras.getString("description"));
         }
         edit_address.addTextChangedListener(new TextWatcher() {

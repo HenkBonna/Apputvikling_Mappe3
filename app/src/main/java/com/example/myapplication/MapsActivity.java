@@ -3,6 +3,8 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.SymbolTable;
 import android.os.AsyncTask;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,27 +41,25 @@ import java.util.ArrayList;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     public static GoogleMap mMap;
     private ActivityMapsBinding binding;
-    private Toolbar toolbar;
     public ArrayList<House> houses = new ArrayList<>();
     public JSONArray buildings_JSON = new JSONArray();
+    public Button edit_button, delete_button;
+    private Marker active_marker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        edit_button = findViewById(R.id.edit_house_button);
+        delete_button = findViewById(R.id.delete_house_button);
+        active_marker = null;
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mapFragment.setHasOptionsMenu(true);
-        /*
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.list_menu);
-        setActionBar(toolbar);
-        getActionBar().setTitle(null);
-        */
     }
 
     @Override
@@ -83,6 +84,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
+                edit_button.setVisibility(View.VISIBLE);
+                edit_button.setEnabled(true);
+                delete_button.setVisibility(View.VISIBLE);
+                delete_button.setEnabled(true);
+                active_marker = marker;
                 marker.showInfoWindow();
                 return false;
             }
@@ -91,6 +97,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(@NonNull Marker marker) {
+                active_marker = null;
+                edit_button.setVisibility(View.INVISIBLE);
+                edit_button.setEnabled(false);
+                delete_button.setVisibility(View.INVISIBLE);
+                delete_button.setEnabled(false);
                 marker.hideInfoWindow();
             }
         });
@@ -113,6 +124,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void addByAddress(View view) {
         Intent intent = new Intent(this, SearchField.class);
         startActivity(intent);
+    }
+
+    public void edit_house(View view) {
+        if (active_marker != null) {
+            House house = (House) active_marker.getTag();
+            if (house != null) {
+                Intent intent = new Intent(this, EditHouse.class);
+                System.out.println("HusID: " + house.getId());
+                intent.putExtra("id", house.getId());
+                intent.putExtra("address", house.getAddress());
+                intent.putExtra("lat", house.getLatLng().latitude);
+                intent.putExtra("lng", house.getLatLng().longitude);
+                String floors_amount = "" + house.getFloors();
+                intent.putExtra("floors", floors_amount);
+                intent.putExtra("description", house.getDescription());
+                startActivity(intent);
+            }
+        }
+    }
+
+    public void delete_house(View view) {
+        AlertDialog.Builder alertDialog_builder = new AlertDialog.Builder(this);
+        alertDialog_builder.setTitle("Slette hus?");
+        alertDialog_builder.setMessage("Er du sikker på at du vil slette dette huset?");
+        alertDialog_builder.setPositiveButton("Ja, slett", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                delete_house(active_marker);
+            }
+        });
+        alertDialog_builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alertDialog = alertDialog_builder.create();
+        alertDialog.show();
+    }
+    public void delete_house(Marker marker){
+
     }
 
     private class getJSON extends AsyncTask<String, Void, String> {

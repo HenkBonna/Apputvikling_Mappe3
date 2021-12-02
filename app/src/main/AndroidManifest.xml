@@ -52,6 +52,11 @@
             android:parentActivityName=".MapsActivity"
             android:launchMode="singleTop">
         </activity>
+        <activity
+            android:name=".EditHouse"
+            android:parentActivityName=".MapsActivity"
+            android:launchMode="singleTop">
+        </activity>
     </application>
 
 </manifest>
