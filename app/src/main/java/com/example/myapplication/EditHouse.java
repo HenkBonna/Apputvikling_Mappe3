@@ -189,15 +189,9 @@ public class EditHouse extends FragmentActivity {
         PostEditedHouse task = new PostEditedHouse();
         task.execute(new String[] {url});
 
-        //####################################################
-
-        //TODO: httprequest, put/update, endrehus.php
-        //TODO Save this to web server
         MapsActivity.refresh = true;
         finish();
     }
-
-    //####################################################
 
     private class PostEditedHouse extends AsyncTask<String, Void, String> {
 

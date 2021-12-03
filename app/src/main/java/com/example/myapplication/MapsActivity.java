@@ -48,10 +48,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public Button edit_button, delete_button;
     private Marker active_marker;
 
-    public static void refreshHouses() {
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,10 +101,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         populate();
 
 
-        LatLng p35 = new LatLng(59.91941,10.73478);
-        //mMap.addMarker(new MarkerOptions().position(p35).title("Markør på P35"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(p35));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(p35, 18));
+        LatLng pilestredet = new LatLng(59.92161,10.73424);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(pilestredet));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pilestredet, 15.5f));
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapsActivity.this));
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -253,7 +248,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 LatLng latLng = new LatLng(latitude, longitude);
 
-                // TODO: If we implement a class, do it here!
                 House house = new House(id, beskrivelse, gateadresse, etasjer, latLng);
                 houses.add(house);
 

@@ -178,8 +178,6 @@ public class AddHouseActivity extends FragmentActivity {
                 String description = String.valueOf(edit_description.getText());
                 int floors = Integer.parseInt(String.valueOf(edit_floors.getText()));
 
-                //####################################################
-
                 houseToSave =  new House(-1, description, address, floors, latLong);
 
                 String url = "http://studdata.cs.oslomet.no/~dbuser28/lagrehus.php/" +
@@ -192,11 +190,6 @@ public class AddHouseActivity extends FragmentActivity {
                 PostHouse task = new PostHouse();
                 task.execute(new String[] {url});
 
-                //####################################################
-
-                //Marker marker = map.addMarker(new MarkerOptions().position(latLong).title(address));
-                //assert marker != null;
-                //marker.setTag(houseToSave);
                 map.moveCamera(CameraUpdateFactory.newLatLng(latLong));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLong, 18));
 
@@ -240,8 +233,6 @@ public class AddHouseActivity extends FragmentActivity {
         alertDialog.show();
     }
 
-    //####################################################
-
     private class PostHouse extends AsyncTask<String, Void, String> {
 
         @Override
@@ -265,7 +256,6 @@ public class AddHouseActivity extends FragmentActivity {
                     }
                     httpURLConnection.disconnect();
                     try {
-                        System.out.println("## AddHouseActivity @ 244 ###\n");
                         return retur;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -274,18 +264,12 @@ public class AddHouseActivity extends FragmentActivity {
                     return "Noe gikk feil.";
                 }
             }
-            System.out.println("## AddHouseActivity 266 ###\n" + retur);
             return retur;
         }
-
         @Override
         protected void onPostExecute(String s) {
-            System.out.println("## AddHouseActivity @ 257 ###\n" + s);
             try {
                 MapsActivity.refresh = true;
-                //houseToSave.setId(-1); // we should have post return Id as s.
-                //addHouse(houseToSave);
-                // TODO: Refresh houses? Render markers again?
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -293,7 +277,5 @@ public class AddHouseActivity extends FragmentActivity {
         }
 
     }
-
-    //####################################################
 
 }
