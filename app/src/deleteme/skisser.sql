@@ -8,9 +8,9 @@ Seeding below:
 drop table Hus;
 create table Hus(id integer primary key auto_increment, beskrivelse varchar(150), gateadresse varchar(40), etasjer varchar(3), latitude varchar(10), longitude varchar(10));
 
-insert into Hus (Beskrivelse,Gateadresse,Etasjer,Latitude,Longitude) values ('P 32 Andrea Arntzens hus','Pilestredet 32, 0167 Oslo, Norway',11,59.92002,10.73616);
+insert into Hus (Beskrivelse,Gateadresse,Etasjer,Latitude,Longitude) values ('P 32 Andrea Arntzens hus','Pilestredet 32, 0167 Oslo, Norway',11,59.91987,10.73614);
 insert into Hus (Beskrivelse,Gateadresse,Etasjer,Latitude,Longitude) values ('Pilestredet park 33 Henriette Bie Lorentzens hus','Pilestredet Park 33, 0167 Oslo, Norway',7,59.92012,10.73827);
-insert into Hus (Beskrivelse,Gateadresse,Etasjer,Latitude,Longitude) values ('P 35 Ellen Gleditschs hus','Pilestredet 32, 0167 Oslo, Norway',11,59.51945,10.73511);
+insert into Hus (Beskrivelse,Gateadresse,Etasjer,Latitude,Longitude) values ('P 35 Ellen Gleditschs hus','Pilestredet 35, 0167 Oslo, Norway',11,59.91933,10.73501);
 insert into Hus (Beskrivelse,Gateadresse,Etasjer,Latitude,Longitude) values ('Holbergsgate 1','Holbergsgate 1, 0167 Oslo, Norway',8,59.92110,10.73615);
 insert into Hus (Beskrivelse,Gateadresse,Etasjer,Latitude,Longitude) values ('SG 26 Natalie Rogoff Ramsoys hus','Stenberggata 26, 0167 Oslo, Norway',9,59.92100,10.73502);
 insert into Hus (Beskrivelse,Gateadresse,Etasjer,Latitude,Longitude) values ('Stenberggata 29','Stenberggata 29, 0167 Oslo, Norway',9,59.92123,10.73446);
