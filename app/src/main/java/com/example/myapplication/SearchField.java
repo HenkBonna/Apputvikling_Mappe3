@@ -94,6 +94,14 @@ public class SearchField extends FragmentActivity {
                         .getJSONObject("location")
                         .getDouble("lat");
 
+                try {
+                    address = ((JSONArray) jsonObject.get("results"))
+                            .getJSONObject(0)
+                            .getString("formatted_address");
+                } catch (Exception e){
+
+                }
+
                 location = String.valueOf(longitude) + ":" + String.valueOf(latitude);
                 Intent intent = new Intent(getApplicationContext(), AddHouseActivity.class);
                 intent.putExtra("address", address);

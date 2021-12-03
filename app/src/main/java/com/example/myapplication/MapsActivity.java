@@ -48,6 +48,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public Button edit_button, delete_button;
     private Marker active_marker;
 
+    public static void refreshHouses() {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
