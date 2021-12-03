@@ -193,6 +193,7 @@ public class EditHouse extends FragmentActivity {
 
         //TODO: httprequest, put/update, endrehus.php
         //TODO Save this to web server
+        MapsActivity.refresh = true;
         finish();
     }
 
@@ -239,10 +240,10 @@ public class EditHouse extends FragmentActivity {
         protected void onPostExecute(String s) {
             System.out.println("## AddHouseActivity @ 257 ###\n" + s);
             try {
+                MapsActivity.refresh = true;
                 //houseToEdit.setId(-1); // we should have post return Id as s.
                 //addHouse(houseToSave);
                 // TODO: Refresh houses? Render markers again?
-                MapsActivity.refresh = true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -251,7 +252,5 @@ public class EditHouse extends FragmentActivity {
 
     }
     //####################################################
-
-
 
 }

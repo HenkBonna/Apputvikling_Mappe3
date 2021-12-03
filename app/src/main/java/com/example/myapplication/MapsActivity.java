@@ -43,9 +43,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static boolean refresh = false;
     private ActivityMapsBinding binding;
     public ArrayList<House> houses = new ArrayList<>();
+    public ArrayList<Marker> all_markers = new ArrayList<>();
     public JSONArray buildings_JSON = new JSONArray();
     public Button edit_button, delete_button;
     private Marker active_marker;
+
+    public static void refreshHouses() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,17 +76,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if(refresh){
+    protected void onRestart() {
+        super.onRestart();
+        if (refresh) {
             clearMarkers();
             houses.clear();
-            generateMarkers();
+            all_markers.clear();
+            populate();
+            refresh = false;
         }
     }
 
     private void clearMarkers() {
-
+        for (Marker m : all_markers) {
+            try {
+                m.remove();
+                m = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -131,7 +145,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private void populate() {
-        System.out.println("##### 099 : Du er i populate \n");
         getJSON task = new getJSON();
         task.execute(new String[] {"http://studdata.cs.oslomet.no/~dbuser28/hentallehus.php"});
     }
@@ -201,7 +214,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
                     }
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                    System.out.println("Output from server ..... \n");
                     while ((s = bufferedReader.readLine()) != null) {
                         output = output + s;
                     }
@@ -217,23 +229,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     return "Noe gikk feil.";
                 }
             }
-            System.out.println("## 150 ###\n" + retur);
             return retur;
         }
 
         @Override
         protected void onPostExecute(String s) {
-            System.out.println("## 155 ###\n" + s);
-            //buildings.add(s);
-            //buildings_JSON.
-
             generateMarkers();
         }
 
     }
 
     private void generateMarkers() {
-        System.out.println("## 168 generateMarkers() ###\n");
         for (int i = 0; i < buildings_JSON.length(); i++){
             JSONObject object = null;
             try {
@@ -263,6 +269,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             .position(h.getLatLng())
                             .title(h.getDescription()));
             assert marker != null;
+            all_markers.add(marker);
             marker.setTag(h);
         }
     }
@@ -366,7 +373,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String url = "http://studdata.cs.oslomet.no/~dbuser28/sletthus.php/" +
                 "?Id=" + id;
         DeleteHouse task = new DeleteHouse();
-        System.out.println("###### 355 Mapsactivity ###");
         task.execute(new String[] {url});
     }
 
@@ -376,7 +382,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String retur = "";
             String s = "";
             String output = "";
-            System.out.println("###### 365 Mapsactivity ###");
             for (String url : urls) {
                 try {
                     URL the_url = new URL(urls[0]);
@@ -384,18 +389,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     httpURLConnection.setRequestMethod("GET");
                     httpURLConnection.setRequestProperty("Accept", "application/json");
                     if (httpURLConnection.getResponseCode() != 200) {
-                        System.out.println("###### 374 Mapsactivity ###" + httpURLConnection.getResponseCode());
                         throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
                     }
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                    System.out.println("Output from server ..... \n");
                     while ((s = bufferedReader.readLine()) != null) {
                         output = output + s;
                     }
-                    System.out.println("###### 380 Mapsactivity ###" + output);
                     httpURLConnection.disconnect();
                     try {
-                        //System.out.println("## AddHouseActivity @ 244 ###\n");
                         return retur;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -404,7 +405,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     return "Noe gikk feil.";
                 }
             }
-            //System.out.println("## AddHouseActivity 266 ###\n" + retur);
             return retur;
         }
 

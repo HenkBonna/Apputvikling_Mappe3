@@ -194,12 +194,13 @@ public class AddHouseActivity extends FragmentActivity {
 
                 //####################################################
 
-                Marker marker = map.addMarker(new MarkerOptions().position(latLong).title(address));
-                assert marker != null;
-                marker.setTag(houseToSave);
+                //Marker marker = map.addMarker(new MarkerOptions().position(latLong).title(address));
+                //assert marker != null;
+                //marker.setTag(houseToSave);
                 map.moveCamera(CameraUpdateFactory.newLatLng(latLong));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLong, 18));
 
+                MapsActivity.refresh = true;
                 finish();
             }
         });
@@ -281,6 +282,7 @@ public class AddHouseActivity extends FragmentActivity {
         protected void onPostExecute(String s) {
             System.out.println("## AddHouseActivity @ 257 ###\n" + s);
             try {
+                MapsActivity.refresh = true;
                 //houseToSave.setId(-1); // we should have post return Id as s.
                 //addHouse(houseToSave);
                 // TODO: Refresh houses? Render markers again?
